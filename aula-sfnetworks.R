@@ -30,14 +30,11 @@ invisible(lapply(pkgs, library, character.only = TRUE))
 ## ─── PARÂMETROS · mude aqui, e só aqui ───────────────────────────────────────
 
 MUNI    <- 3548906           # código IBGE — São Carlos/SP
-REF_LON <- -47.903152        # Av. Comendador Alfredo Maffei, 1310
-REF_LAT <- -22.016216
+REF_LON <- NULL              # Posição da obra???
+REF_LAT <- NULL
 
 # As três usinas conferidas em aula, por posição em `estab`.
-IDX_USINAS  <- c(3128, 6978, 13204)
-# Índice do CNEFE muda se o IBGE revisar o arquivo. Depois de rodar uma vez,
-# copie os códigos impressos no passo 3 para cá e troque a linha de seleção.
-COD_USINAS  <- NULL          # ex.: c("3548906...", "3548906...", "3548906...")
+COD_USINAS  <- c(57762128,106266654,57699126) 
 
 FOLGA_KM <- 3                # folga do recorte do OSM além dos pontos
 PESO_T   <- 30               # t · betoneira de 8 m³ carregado, com tara
@@ -63,9 +60,6 @@ T_DESCARGA <- 15             # min · descarga no canteiro
 JANELA     <- 90             # min · ABNT NBR 7212 (conferir edição vigente)
 
 UTM <- 31983                 # SIRGAS 2000 / UTM 23S — para medir em metros
-
-# REGRA DESTE ARQUIVO: `tab` nasce na ordem de `usinas` e NUNCA é reordenada.
-# Ordenar é coisa de exibição: use arrange() só dentro de um print.
 
 
 # ==============================================================================
@@ -99,8 +93,10 @@ cat(sprintf("  canteiros de espécie 7 no município : %d
   distância do endereço ao canteiro   : %.0f m\n",
   nrow(obras), as.numeric(st_distance(obra, ref))))
 
-# Se essa distância passar de ~100 m, o canteiro do CNEFE não é a sua obra —
-# é o vizinho. Nesse caso use `obra <- st_sf(geometry = ref)` e siga.
+# Se essa distância passar de ~100 m, o canteiro do CNEFE não é a sua obra. 
+# Neste caso use:
+#obra <- st_sf(geometry = ref)
+#obra$NOME = "Obra"
 
 
 # ==============================================================================
@@ -116,7 +112,7 @@ stopifnot(nrow(usinas) == 3, !anyDuplicated(usinas$NOME))
 # Copie estes códigos para COD_USINAS e a seleção fica reproduzível.
 print(st_drop_geometry(usinas))
 
-mapview(usinas, col.regions = "orange", layer.name = "Usinas") +
+mapview(usinas, col.regions = "red", layer.name = "Usinas", zcol='NOME') +
   mapview(obra, col.regions = "black", layer.name = "Obra")
 
 
@@ -131,8 +127,8 @@ tab <- usinas |>
 
 tab |> arrange(km_reta)
 
-# Nenhum caminhão percorre esta distância. Mas a realidade só pode ser pior
-# que ela, nunca melhor — por isso serve de piso, e não de estimativa.
+# Nenhum caminhão percorre esta distância. Mas isso serve de referência, 
+# e não de estimativa.
 
 
 # ==============================================================================
@@ -240,8 +236,7 @@ tab |>
   mutate(across(where(is.numeric), \(x) round(x, 1))) |>
   arrange(min_restr)
 
-cat(sprintf("\n  circuidade MEDIDA, por usina : %s
-  (no arquivo anterior era 1,35 para todas, escolhido no slide)\n",
+cat(sprintf("\n  circuidade MEDIDA, por usina : %s\n",
   paste(round(tab$circuidade, 2), collapse = " · ")))
 
 # Inf em min_restr não é bug: é a resposta. O caminhão não chega sem violar a
