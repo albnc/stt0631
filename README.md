@@ -24,3 +24,5 @@ Pacotes de dados abertos usados: `cnefetools` (endereços),
 e do IPEA, todos offline depois do primeiro download.
 
 ---
+[Material da aula](aula-sfnetworks.md)
+---
