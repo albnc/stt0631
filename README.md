@@ -24,8 +24,8 @@ Pacotes de dados abertos usados: `cnefetools` (endereços),
 e do IPEA, todos offline depois do primeiro download.
 
 
-![cnefetools](https://pedreirajr.github.io/cnefetools/logo.svg){width:"100px"}
-![geobr](https://raw.githubusercontent.com/ipea/geobr/refs/heads/master/r-package/man/figures/geobr_logo_y.png){width:"100px"}
+![cnefetools](https://pedreirajr.github.io/cnefetools/logo.svg | width=100)
+![geobr](https://raw.githubusercontent.com/ipea/geobr/refs/heads/master/r-package/man/figures/geobr_logo_y.png | width=100)
 
 ---
 [Material da aula](aula-sfnetworks.md)
