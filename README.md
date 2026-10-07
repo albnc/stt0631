@@ -23,6 +23,9 @@ Pacotes de dados abertos usados: `cnefetools` (endereços),
 `geocodebr` (endereço ↔ coordenada) e `geobr` (malha urbana) — todos do IBGE
 e do IPEA, todos offline depois do primeiro download.
 
+
+![cnefetools](https://pedreirajr.github.io/cnefetools/logo.svg)
+![geobr](https://raw.githubusercontent.com/ipea/geobr/refs/heads/master/r-package/man/figures/geobr_logo_y.png)
 ---
 [Material da aula](aula-sfnetworks.md)
 ---
